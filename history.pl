@@ -5,13 +5,18 @@ use CGI qw(:standard);
 use HTML::Scrubber;
 use open ':encoding(utf8)';
 
-my $qedit = new CGI;
+#Require config 
+require 'config.pl';
+
+my $qhistory = new CGI;
 binmode(STDOUT, ":utf8");
 
 #print header('text/plain');
 print header (-charset => 'UTF-8',
 		-type => 'text/plain');
-my $log = `tail /var/www/camera/logcam.txt`;
+
+my $datadir = &get_datadir();
+my $log = `tail $datadir/logcam.txt`;
 
 my $scrubber = HTML::Scrubber->new;
 $scrubber->default(0); ## default to no HTML

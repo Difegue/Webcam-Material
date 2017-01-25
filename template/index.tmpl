@@ -7,8 +7,7 @@
 	<script src="./js/materialize.min.js"></script>
 	<script src="./js/functions.js"></script>
 	<script src="./js/jQueryRotate.js"></script>
-	<!--<script src="http://faglord.party:8255/socket.io/socket.io.js"></script>-->
-	<title>La Webcam du Local </title>
+	<title>[% title %]</title>
 	 <meta charset="UTF-8"> 
 </head>
 
@@ -16,7 +15,7 @@
 
 	<nav>
 		<div class="nav-wrapper blue accent-2">
-			<a href="#" class="brand-logo center ">La Webcam du Local</a>
+			<a href="#" class="brand-logo center ">[% title %]</a>
 		</div>
 	</nav>
 
@@ -48,7 +47,8 @@
 			
 
 			<div id="cam1" style=""> <!-- Note that "m8 l9" was added -->
-				<img class="z-depth-3 responsive-img" id="camjpg1" width="1280" height="720" alt="Live Stream" id="webcam1" src="./stream/cam_1.jpg">
+				<img class="z-depth-3 responsive-img" id="camjpg1" width="1280" height="720" alt="Live Stream" id="webcam1" 
+					src="[% datadir %]/cam_1.jpg">
 			</div>
 
 			<div id="cam2" style="">
@@ -97,7 +97,11 @@
         <div class="input-field col s11">
            
 		<input id="textarea1" type="text" length="100"></input>
-            	<label for="textarea1">Send Voice Message</label>
+			[% IF audioenabled %]
+				<label for="textarea1">Send Audio Message</label>
+			[% ELSE %]
+				<label for="textarea1">Send Message</label>
+			[% END %]
             </form>
         </div>
 
@@ -138,6 +142,23 @@
 	 
 
 	<script>
+
+
+	function refreshPicture(camNumb)
+	{
+
+		//console.log(camNumb);
+		var wb = document.getElementById("cam"+camNumb);
+
+		if (wb.style.display!="none")
+		{
+			//if (stream=="javascript")
+			document.getElementById("camjpg"+camNumb).src="[% datadir %]/cam_"+camNumb+".jpg?"+ new Date().getTime();
+			//else
+			//	document.getElementById("camjpg"+camNumb).src="./stream/cam_"+camNumb+".cgi?"+ new Date().getTime();
+		}
+
+	}
 
 	focused=true;
 	stream="javascript";

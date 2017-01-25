@@ -45,22 +45,6 @@ if (/*@cc_on!@*/false) { // check for Internet Explorer
 	
 }*/
 
-function refreshPicture(camNumb)
-{
-
-	//console.log(camNumb);
-	var wb = document.getElementById("cam"+camNumb);
-
-	if (wb.style.display!="none")
-	{
-		//if (stream=="javascript")
-		document.getElementById("camjpg"+camNumb).src="./stream/cam_"+camNumb+".jpg?"+ new Date().getTime();
-		//else
-		//	document.getElementById("camjpg"+camNumb).src="./stream/cam_"+camNumb+".cgi?"+ new Date().getTime();
-	}
-
-}
-
 function rotateCurrentCamera()
 {
 	var wb1 = document.getElementById("cam1");

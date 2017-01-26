@@ -3,10 +3,13 @@
 use strict;
 
 #Configuration values for the webcam application.
-my $camname = "La Webcam INEM";
+my $camname = "Now THIS is a webcam 👺";
 
 #Height/Width parameters of the webcam. The application uses the default first V4L device (/dev/video0)
-my @webcamdim = [1280, 720];
+my @webcamdim = (1280, 720);
+
+#Refresh rate of the camera picture, in seconds.
+my $webcamrefresh = 1;
 
 #Enable audio playback of messages sent to the camera. Requires espeak.
 my $audioenabled = 0;
@@ -26,6 +29,7 @@ my $datadir = "/var/www/camdata";
 
 sub get_camname { return $camname };
 sub get_webcamdim { return @webcamdim };
+sub get_webcamrefresh { return $webcamrefresh };
 sub is_audioenabled { return $audioenabled };
 sub get_datadir { return $datadir };
 sub get_banlist { return @banlist };

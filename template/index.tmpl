@@ -28,16 +28,6 @@
 
 	<center>
 
-
-		<!-- Teal page content
-
-		This content will be:
-
-		9-columns-wide on large screens,
-
-		8-columns-wide on medium screens,
-
-		12-columns-wide on small screens -->
 		<div class="col s12 m12 l11"  onclick="refreshPicture(1); refreshPicture(2);">
 			
 			<ul id="wat" class="tabs" style="margin-bottom:5px;">
@@ -48,7 +38,7 @@
 
 			<div id="cam1" style=""> <!-- Note that "m8 l9" was added -->
 				<img class="z-depth-3 responsive-img" id="camjpg1" width="1280" height="720" alt="Live Stream" id="webcam1" 
-					src="[% datadir %]/cam_1.jpg">
+					src="./style/offline.png">
 			</div>
 
 			<div id="cam2" style="">
@@ -69,7 +59,7 @@
    
 			  <br>
 			  <br>
-			  <div id="stream_indic" style="color: #9e9e9e;margin-left: 10px">Stream: JS</div>
+			  <div id="stream_indic" style="color: #9e9e9e;margin-left: 10px">Quality: None</div>
   
 		</div>
 
@@ -143,42 +133,18 @@
 
 	<script>
 
-
-	function refreshPicture(camNumb)
-	{
-
-		//console.log(camNumb);
-		var wb = document.getElementById("cam"+camNumb);
-
-		if (wb.style.display!="none")
-		{
-			//if (stream=="javascript")
-			document.getElementById("camjpg"+camNumb).src="[% datadir %]/cam_"+camNumb+".jpg?"+ new Date().getTime();
-			//else
-			//	document.getElementById("camjpg"+camNumb).src="./stream/cam_"+camNumb+".cgi?"+ new Date().getTime();
-		}
-
-	}
-
 	focused=true;
 	stream="javascript";
 	angle1=0;
 	angle2=0;
-	cam1Timer = setInterval("refreshPicture(1)", 150);
-	//cam2Timer = setInterval("refreshPicture(2)", 150);
 	
-	//One sec
-	//var timeout = 5000;
-	//Starting socket.io
-	/*var t = io.connect("http://faglord.party:8255", {
-		'connect timeout': timeout,
-		'reconnect': true,
-		'reconnection delay': 2000,
-		'max reconnection attempts': 10000,
-		'force new connection':true
-	});
+	cam1Timer = 0;
+	refreshPicture();
+
+	//cam2Timer = setInterval("refreshPicture(2)", 150);
+
 	//quand on reçoit une update du nombre d'users, on màj le compteur
-	t.on('users', function(msg) {
+	/*t.on('users', function(msg) {
     document.getElementById("viewers").innerHTML=msg;
 	});*/
 	

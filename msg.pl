@@ -42,10 +42,10 @@ if ($qedit->param('login') && $qedit->param('passw') && $qedit->param('message')
 					}
 					else
 					{ 
-        			$result = qq({
-								   "result": 1,
-								   "message":"Message sent! (No audio)"
-								}); 
+	        			$result = qq({
+									   "result": 1,
+									   "message":"Message sent! (No audio)"
+									}); 
 					}
         		}
         }
@@ -58,7 +58,7 @@ if ($qedit->param('login') && $qedit->param('passw') && $qedit->param('message')
 		}
 }
 
-print header('text/plain');
+print header('application/json');
 print $result;
 
 
@@ -66,6 +66,9 @@ print $result;
 #loginLDAP($login, $password)
 sub loginLDAP
 	{
+		#test for no LDAP -- remove in real conditions
+		return 1;
+
 		my $login = $_[0];
 		my $pass = $_[1];
 		

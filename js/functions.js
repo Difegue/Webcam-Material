@@ -77,13 +77,12 @@ function savePicture()
 	newElement.style.width="20%"; 
 	newElement.style.marginRight="5px";
 
-	if (wb1.style.display=="none")
-		newElement.src="./stream/cam_2.jpg?"+ new Date().getTime();
-	else
-		newElement.src="./stream/cam_1.jpg?"+ new Date().getTime();
-		newElement.class="z-depth-1";
-		document.getElementById("screenshots").appendChild(newElement);
-		Materialize.toast('Screenshot Saved!', 1000);
+
+	newElement.src="./cam.jpg?"+ new Date().getTime();
+
+	newElement.class="z-depth-1";
+	document.getElementById("screenshots").appendChild(newElement);
+	Materialize.toast('Screenshot Saved!', 1000);
 
 }
 
@@ -103,10 +102,11 @@ function sendMessage()
 				url: "msg.pl",
 				data: {message: mess, login:login, passw:document.getElementById("password").value},
 				}).always(function(data) {
-					Materialize.toast(data,1000);
-                                            if (data != "Audio message already playing."){
-					     document.getElementById("textarea1").value="";
-                                            }
+					Materialize.toast(data.message,1000);
+                    if (data.result){
+                    	//wipe text field on successful message
+					    document.getElementById("textarea1").value="";
+                        }
 					});
 	//});
 
@@ -119,4 +119,25 @@ function getLastMessages()
 		function(data){
 		document.getElementById("history").innerHTML=data;
 		});
+}
+
+function refreshPicture()
+{
+		jQuery.ajax({
+			method: "GET",
+			url: "stream.pl",
+			data: {},
+			}).always(function(data) {
+
+				if (data.result){
+					document.getElementById("camjpg1").src="./cam.jpg?"+ new Date().getTime();
+					cam1Timer = setTimeout("refreshPicture()", 200);
+					document.getElementById("stream_indic").innerHTML="Quality: "+data.w+"x"+data.h;
+				}
+				else{
+					//longer timer if camera is offline
+					document.getElementById("camjpg1").src="./style/offline.png";
+					cam1Timer = setTimeout("refreshPicture()", 10000);
+				}
+			});
 }

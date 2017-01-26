@@ -5,7 +5,7 @@ Web frontend to a V4L-compatible webcam, running on Perl and using Materialize C
 Supports screenshots and messages using LDAP for account checking.  
 Messages can be audio-transcripted using espeak.  
 
-![]()  
+![](http://raw.githubusercontent.com/Difegue/Webcam-Material/master/screenshot.jpg)  
 
 Dependencies and setup:  
 ```

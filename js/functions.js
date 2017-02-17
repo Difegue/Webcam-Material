@@ -127,11 +127,13 @@ function getViewers()
 	jQuery.ajax({
 		method: "GET",
 		url: "viewercount.pl",
-		data: {CGISESSID: viewerID},
+		data: {VIEWERID: viewerID},
 		}).always(function(data) {
 
 			document.getElementById("viewers").innerHTML=data.viewers;
 			viewerID = data.vid;
+			//Save in localStorage for ID conservation
+			localStorage.setItem('viewerID',viewerID);
 		});
 
 }

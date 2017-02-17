@@ -138,10 +138,16 @@
 	angle1=0;
 	angle2=0;
 	viewerID = "";
+
+	//Initialize viewerID through localStorage if it exists
+	if (!localStorage.getItem("viewerID") === null)
+		viewerID = localStorage.getItem("viewerID");
 	
 	cam1Timer = 0;
 	refreshPicture();
-
+	getLastMessages();
+	getViewers();
+	
 	//cam2Timer = setInterval("refreshPicture(2)", 150);
 
 	//quand on reçoit une update du nombre d'users, on màj le compteur
@@ -151,8 +157,7 @@
 	
 	messageTimer = setInterval("getLastMessages()", 10000);
 	viewerTimer = setInterval("getViewers()", 20000);
-	getLastMessages();
-	getViewers();
+	
 	</script>
 
 </body> 

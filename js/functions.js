@@ -47,6 +47,7 @@ if (/*@cc_on!@*/false) { // check for Internet Explorer
 
 function rotateCurrentCamera()
 {
+	//angle1/2 are initialized 
 	var wb1 = document.getElementById("cam1");
 	var wb2 = document.getElementById("cam2");
 
@@ -69,7 +70,6 @@ function savePicture()
 {
 
 	var wb1 = document.getElementById("cam1");
-
 	var wb2 = document.getElementById("cam2");
 
 	var newElement = document.createElement('img');
@@ -121,23 +121,38 @@ function getLastMessages()
 		});
 }
 
+function getViewers()
+{
+	//viewerID is initialized in index.html
+	jQuery.ajax({
+		method: "GET",
+		url: "viewercount.pl",
+		data: {CGISESSID: viewerID},
+		}).always(function(data) {
+
+			document.getElementById("viewers").innerHTML=data.viewers;
+			viewerID = data.vid;
+		});
+
+}
+
 function refreshPicture()
 {
-		jQuery.ajax({
-			method: "GET",
-			url: "stream.pl",
-			data: {},
-			}).always(function(data) {
+	jQuery.ajax({
+		method: "GET",
+		url: "stream.pl",
+		data: {},
+		}).always(function(data) {
 
-				if (data.result){
-					document.getElementById("camjpg1").src="./cam.jpg?"+ new Date().getTime();
-					cam1Timer = setTimeout("refreshPicture()", 200);
-					document.getElementById("stream_indic").innerHTML="Quality: "+data.w+"x"+data.h;
-				}
-				else{
-					//longer timer if camera is offline
-					document.getElementById("camjpg1").src="./style/offline.png";
-					cam1Timer = setTimeout("refreshPicture()", 10000);
-				}
-			});
+			if (data.result){
+				document.getElementById("camjpg1").src="./cam.jpg?"+ new Date().getTime();
+				cam1Timer = setTimeout("refreshPicture()", 200);
+				document.getElementById("stream_indic").innerHTML="Quality: "+data.w+"x"+data.h;
+			}
+			else{
+				//longer timer if camera is offline
+				document.getElementById("camjpg1").src="./style/offline.png";
+				cam1Timer = setTimeout("refreshPicture()", 10000);
+			}
+		});
 }

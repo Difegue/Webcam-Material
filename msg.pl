@@ -114,24 +114,25 @@ sub sendAudioMessage
 
                 unless (-e $lockfile)
                 {
-                        #my $mpdStatus = `mpc -h riparateur\@localhost`;
-                        #my $paused = 0;
+
                         open my $fh,">".$lockfile;
 
-                        #$message = uri_escape($message);
-                        #`wget --user-agent="" -O /var/www/mpdmessage/msg.mp3 'https://translate.google.fr/translate_tts?ie=UTF-8&q="$message"&tl=fr'`;
-
-                        #if (index($mpdStatus,"playing") != -1)
-                       # {
-                       #         `mpc -h riparateur\@localhost pause`;
-                       #         $paused=1;
-                       # }
-
-                        #`mpg123 /var/www/mpdmessage/msg.mp3`;
-                        `espeak -vfrench -k5 -s100 "$message"`;
-
-                        #if ($paused == 1)
-                        #{`mpc -h riparateur\@localhost play`;}
+                        if (&is_espeakenabled())
+                        {
+                        	#espeak automatically plays the audio file
+                        	`espeak -vfrench -k5 -s100 "$message"`;
+                        }
+                        else
+                        {
+                        	$message = uri_escape($message);
+                        	my $mp3location = &get_datadir()."/msg.mp3";
+                        	#delete already existing message
+                        	unlink $mp3location;
+                        	#download audio from responsivevoice
+                        	`wget --user-agent="" -O $mp3location 'https://code.responsivevoice.org/getvoice.php?t=$message&tl=fr&pitch=0.2&rate=0.4'`;
+                        	#then play it with mpg123
+                        	`mpg123 $mp3location`;
+                        }
 
                         unlink ($lockfile);
                         return qq({

@@ -153,7 +153,7 @@ function refreshPicture()
 			}
 			else{
 				//longer timer if camera is offline
-				document.getElementById("camjpg1").src="./style/offline.png";
+				document.getElementById("camjpg1").setAttribute('src', offlineImage);
 				cam1Timer = setTimeout("refreshPicture()", 10000);
 			}
 		});

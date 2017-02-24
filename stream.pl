@@ -19,6 +19,7 @@ require 'config.pl';
 my $getpicture = 0;
 my $datadir = &get_datadir();
 my $picturefile = $datadir."/camera.jpg";
+my $lockfile = $datadir."/camera.lock";
 
 my @webcamdim = &get_webcamdim();
 my $w = $webcamdim[0];
@@ -39,7 +40,14 @@ if ($getpicture)
 {
 
 	#check if another instance of stream.pl isn't already capturing an image by looking for a lockfile
-	my $lockfile = $datadir."/camera.lock";
+    if (-e $lockfile)
+    {
+    	#check age of lockfile -- if it's too old, delete it and carry on
+    	my $sessionlife = time - (stat($lockfile))[9]; #current time - last modified time of the lockfile
+
+    	if ($sessionlife < 5)
+    	{ unlink($lockfile); }
+    }
 
     unless (-e $lockfile)
     {
@@ -66,7 +74,16 @@ if ($getpicture)
 #Otherwise we return 0, so that the front-end knows if the camera connection is working.
 print header('application/json');
 
-if (-e $picturefile)
+if (-e $lockfile)
+{
+	print qq({
+			   "result": 1,
+			   "message":"Camera busy.",
+			   "w": $w,
+			   "h": $h
+			}); 
+}
+elsif (-e $picturefile)
 {
 	print qq({
 			   "result": 1,

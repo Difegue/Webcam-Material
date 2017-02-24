@@ -3,7 +3,6 @@
 use strict;
 use CGI qw(:standard);
 use URI::Escape;
-use LWP::Simple;
 use Net::LDAP;
 
 my $qedit = new CGI;
@@ -24,7 +23,8 @@ if ($qedit->param('login') && $qedit->param('passw') && $qedit->param('message')
         		{ 
         			$result = qq({
 								   "result": 0,
-								   "message":"Banned LDAP Login."
+								   "message":"Banned LDAP Login.",
+								   "sent":"$message"
 								}); 
 				}
         	else
@@ -44,7 +44,8 @@ if ($qedit->param('login') && $qedit->param('passw') && $qedit->param('message')
 					{ 
 	        			$result = qq({
 									   "result": 1,
-									   "message":"Message sent! (No audio)"
+									   "message":"Message sent! (No audio)",
+									   "sent":"$message"
 									}); 
 					}
         		}
@@ -53,7 +54,8 @@ if ($qedit->param('login') && $qedit->param('passw') && $qedit->param('message')
    		{ 
 			$result = qq({
 						   "result": 0,
-						   "message":"Login Error."
+						   "message":"Login Error.",
+						   "sent":"$message"
 						}); 
 		}
 }
@@ -106,6 +108,7 @@ sub loginLDAP
 sub sendAudioMessage
 	{
 		my $message = $_[0];
+		$message = uri_unescape($message);
 
 		#Check if a message isn't already being sent
         if ($message ne "")
@@ -119,8 +122,10 @@ sub sendAudioMessage
 
                         if (&is_espeakenabled())
                         {
+                        	#my $outputest = &get_datadir()."/espeak.wav";
+                        	#`espeak -vfrench -k5 -s100 "$message" -w $outputest`;
                         	#espeak automatically plays the audio file
-                        	`espeak -vfrench -k5 -s100 "$message"`;
+                        	`espeak -vfrench -k5 -s100 "$message" `;
                         }
                         else
                         {
@@ -137,7 +142,8 @@ sub sendAudioMessage
                         unlink ($lockfile);
                         return qq({
 								   "result": 1,
-								   "message":"Message sent!"
+								   "message":"Message sent!",
+								   "sent":"$message"
 								}); 
 					
                 }
@@ -145,7 +151,8 @@ sub sendAudioMessage
                 {
                         return qq({
 								   "result": 0,
-								   "message": "Audio message already playing."
+								   "message": "Audio message already playing.",
+								   "sent":"$message"
 								   });
                 }
         }

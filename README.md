@@ -10,7 +10,7 @@ Messages can be audio-transcripted using espeak.
 Dependencies and setup:  
 ```
 sudo apt-get install perl apache2 cpanminus espeak  
-sudo cpanm CGI HTML::Scrubber URI::Escape LWP::Simple Net::LDAP Digest::MD5 Template  
+sudo cpanm CGI HTML::Scrubber URI::Escape LWP::Simple Net::LDAP Digest::MD5 Template File::ReadBackwards 
 sudo usermod -a -G video www-data  
 sudo a2enmod cgi  
 ```

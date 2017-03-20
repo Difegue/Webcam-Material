@@ -115,7 +115,7 @@ function sendMessage()
 
 function getLastMessages()
 {
-	jQuery.get("history.pl",
+	jQuery.get("history.pl?messages=10&html=1",
 		function(data){
 		document.getElementById("history").innerHTML=data;
 		});

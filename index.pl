@@ -27,7 +27,8 @@ $tt->process(
         title => &get_camname(),
         datadir => &get_datadir(),
         audioenabled => &is_audioenabled(),
-        color => &get_color()
+        color => &get_color(),
+        useexternal => &get_external()
     },
     \$out,
 ) or die $tt->error;

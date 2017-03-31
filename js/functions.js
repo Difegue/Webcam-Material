@@ -138,23 +138,43 @@ function getViewers()
 
 }
 
-function refreshPicture()
+function refreshPicture(externalstr)
 {
-	jQuery.ajax({
-		method: "GET",
-		url: "stream.pl",
-		data: {},
-		}).always(function(data) {
+	//old version - handles camera with javascript and v4l2-ctl serverside
+	if (!externalstr)
+		jQuery.ajax({
+			method: "GET",
+			url: "stream.pl",
+			data: {},
+			}).always(function(data) {
 
-			if (data.result){
-				document.getElementById("camjpg1").src="./cam.jpg?"+ new Date().getTime();
-				cam1Timer = setTimeout("refreshPicture()", 200);
-				document.getElementById("stream_indic").innerHTML="Quality: "+data.w+"x"+data.h;
-			}
-			else{
-				//longer timer if camera is offline
-				document.getElementById("camjpg1").setAttribute('src', offlineImage);
-				cam1Timer = setTimeout("refreshPicture()", 10000);
-			}
-		});
+				if (data.result){
+					document.getElementById("camjpg1").src="./cam.jpg?"+ new Date().getTime();
+					cam1Timer = setTimeout("refreshPicture(false)", 200);
+					document.getElementById("stream_indic").innerHTML="Quality: "+data.w+"x"+data.h;
+				}
+				else{
+					//longer timer if camera is offline
+					document.getElementById("camjpg1").setAttribute('src', offlineImage);
+					cam1Timer = setTimeout("refreshPicture(false)", 10000);
+				}
+			});
+	else
+	{
+		//streameye version - source image is a reverse proxied apache file pointing to port 8080
+		document.getElementById("camjpg1").src="./camstream";
+		document.getElementById("stream_indic").innerHTML="Quality: 1920x1080";
+		jQuery.ajax({
+			method: "GET",
+			url: "./camstream",
+			data: {},
+			}).done(function() {
+					document.getElementById("camjpg1").src="./camstream";
+					document.getElementById("stream_indic").innerHTML="Quality: 1920x1080";
+				}).fail(function () {
+					//longer timer if camera is offline
+					document.getElementById("camjpg1").setAttribute('src', offlineImage);
+					cam1Timer = setTimeout("refreshPicture(true)", 10000);
+				});
+	}
 }

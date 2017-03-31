@@ -15,4 +15,6 @@ sudo usermod -a -G video www-data
 sudo a2enmod cgi  
 ```
 
-Don't forget to configure your apache sites-enabled in order to execute .pl scripts.
+Don't forget to configure your apache sites-enabled in order to execute .pl scripts.  
+
+If you want to get better fps than my shit implementation, support for ![streameye](https://github.com/ccrisan/streameye) (or any other external mjpeg streamer really) is available.

@@ -5,7 +5,7 @@ use CGI qw(:standard);
 
 #Uses regular V4L cmd tools (mostly v4l2-ctl) to grab an image from the camera if the last one is too old (or doesn't exist at all)
 #Returns a path to the generated image.
-
+#Super fucking slow, better use somehting like streameye instead
 my $qjpg = new CGI;
 my $result = "No parameter specified.";
 

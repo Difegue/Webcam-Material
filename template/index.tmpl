@@ -144,7 +144,7 @@
 		viewerID = localStorage.getItem("viewerID");
 	
 	cam1Timer = 0;
-	refreshPicture();
+	refreshPicture([% useexternal %]);
 	getLastMessages();
 	getViewers();
 	

@@ -14,7 +14,7 @@ my $webcamrefresh = 1;
 #Enable audio playback of messages sent to the camera. Requires espeak or a web connection+mpg123.
 my $audioenabled = 1;
 
-#Use an external MJPEG stream located at camdata instead of the default implementation.
+#Use an external MJPEG stream located at camstream instead of the default implementation.
 my $useext = 0;
 
 #Use espeak for audio messages. Default language is set to french.

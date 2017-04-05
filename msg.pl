@@ -69,7 +69,7 @@ print $result;
 sub loginLDAP
 	{
 		#test for no LDAP -- remove in real conditions
-		return 1;
+		#return 1;
 
 		my $login = $_[0];
 		my $pass = $_[1];

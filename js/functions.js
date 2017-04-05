@@ -106,6 +106,8 @@ function sendMessage()
                     if (data.result){
                     	//wipe text field on successful message
 					    document.getElementById("textarea1").value="";
+			    //refresh history immediately
+                        getLastMessages();
                         }
 					});
 	//});

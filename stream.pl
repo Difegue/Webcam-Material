@@ -58,14 +58,15 @@ if ($getpicture)
     	unlink($picturefile);
 
     	#take picture
-    	`v4l2-ctl --set-fmt-video=width=$w,height=$h,pixelformat=3`;
-		`v4l2-ctl --stream-mmap=3 --stream-count=1 --stream-to=$picturefile`;
+    	#`v4l2-ctl --set-fmt-video=width=$w,height=$h,pixelformat=3`;
+	#`v4l2-ctl --stream-mmap=3 --stream-count=1 --stream-to=$picturefile`;
+	my $res = $w."x".$h;
+	`fswebcam -r $res --save $picturefile`;
+	#copy picture to web directory, overwriting old one
+	`cp $picturefile cam.jpg`;
 
-		#copy picture to web directory, overwriting old one
-		`cp $picturefile cam.jpg`;
-
-		#delete lockfile
-		unlink ($lockfile);
+	#delete lockfile
+	unlink ($lockfile);
     }
 
 }

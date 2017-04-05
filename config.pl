@@ -14,6 +14,9 @@ my $webcamrefresh = 1;
 #Enable audio playback of messages sent to the camera. Requires espeak or a web connection+mpg123.
 my $audioenabled = 1;
 
+#Use an external MJPEG stream located at camdata instead of the default implementation.
+my $useext = 0;
+
 #Use espeak for audio messages. Default language is set to french.
 #If disabled, a remote TTS API (responsivevoice.org) will be used instead, alongside mpg123 for playback. 
 my $espeakenabled = 0;
@@ -45,3 +48,4 @@ sub get_banlist { return @banlist };
 sub get_ldapserv { return $LDAPserver };
 sub get_ldappass { return $LDAPpass };
 sub get_color { return $color };
+sub get_external { return $useext };
